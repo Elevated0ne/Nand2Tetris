@@ -1,9 +1,16 @@
-Chapter 1 is just the gates and, or, not, xor, mux, dmux, the equivalents multiway and multibit can be done by tinkering with the previous gates, in short, you probably just need to fuck around as much as you can, i tried thinking a lot on what'll work, but eventually gave up and just began typing
+Chapter 1 is just the gates and, or, not, xor, mux, dmux, the equivalents multiway and multibit can be done by tinkering with the previous gates, in short, you probably 
+just need to fuck around as much as you can, i tried thinking a lot on what'll work, but eventually gave up and just began typing
 Note: the multibit gates are hell of annoying copy paste, a simple python for i in range(16): should straighten things out
-Note2: for small gates, sometimes just looking at the compare file is enough to predict what gates to use, although it is highly inefficient, i doubt i'd like to spend more time looking at those damn confusing gates
+Note2: for small gates, sometimes just looking at the compare file is enough to predict what gates to use, although it is highly inefficient, i doubt i'd like to spend more 
+time looking at those damn confusing gates
 
-Chapter 2's gates are also pretty much the same as the previous one, but you use the 16 bit gates. the incrementer had me stuck for a bit until i realized i can negate the input and add it by itself to get 0, 0 negated becomes -1, and then i add -1 to -1 to get -2, then negate it again to get 1. This might seem cumbersome (it is), but it came from the logic of the alu itself
+Chapter 2's gates are also pretty much the same as the previous one, but you use the 16 bit gates. the incrementer had me stuck for a bit until i realized i can negate 
+the input and add it by itself to get 0, 0 negated becomes -1, and then i add -1 to -1 to get -2, then negate it again to get 1. This might seem cumbersome (it is), 
+but it came from the logic of the alu itself
 
-The alu was the first time i asked the ai for help (thank god i did), the general thing is that you use mux for ifs, and fan out the result (something i wouldn't have known if not for reading appendix 2 first), the bit at the front is 2's complement's signature sign, so it is ng, and for zr, you just see if the output has a 1 anywhere in it (fanning it out again) and use ormultiway gate
+The alu was the first time i asked the ai for help (thank god i did), the general thing is that you use mux for ifs, and fan out the result (something i wouldn't have 
+known if not for reading appendix 2 first), the bit at the front is 2's complement's signature sign, so it is ng, and for zr, you just see if the output has a 1 anywhere
+in it (fanning it out again) and use ormultiway gate
 
-Note: I'd have been here ages ago if i just asked the ai in the first place, i think i'll go back and question about some of the other gates that i made without understand how they worked
+Note: I'd have been here ages ago if i just asked the ai in the first place, i think i'll go back and question about some of the other gates that i made without 
+understand how they worked
