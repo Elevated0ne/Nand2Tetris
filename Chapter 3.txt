@@ -1,0 +1,25 @@
+we make 8 registers, but how do we input them?
+
+Mux8Way16(in = o0, in = o1, in = o2, in = o3, in = o4, in = o5, in = o6, in = o7, sel = address, out = out)
+
+Register(in = in0, load = load0, out = o0, out = old0)
+Register(in = in1, load = load1, out = o1, out = old1)
+Register(in = in2, load = load2, out = o2, out = old2)
+Register(in = in3, load = load3, out = o3, out = old3)
+Register(in = in4, load = load4, out = o4, out = old4)
+Register(in = in5, load = load5, out = o5, out = old5)
+Register(in = in6, load = load6, out = o6, out = old6)
+Register(in = in7, load = load7, out = o7, out = old7)
+
+Mux(in = old, in = in, sel = load, out = invar)
+DFF(in = invar, out = out, out = old)
+
+I thought it'd be more informative to put some junk in there as part of my progress through chapter 3. It was a bit difficult for
+me to understand the clock mechanism, so i just went and build the gates instead (and instantly failed at bit). So i went and asked
+gemini how to do it, turns out, you have to fan out the results, well, after successfully building bit and register (just a copypaste 
+version of the 16 bit gates), i went back to the book and saw that they already showed the bit design, which means i didn't really need 
+to consult the ai. The rest went smoothly because the ram are the same. I got stuck at the program counter, but it was just a matter of doing
+ifs backwards (had to consult gemini again, how helpless T_T)
+
+
+Anyhow, this chapter was pretty boring(?), but it was fun doing the gates 
