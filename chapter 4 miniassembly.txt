@@ -1,0 +1,442 @@
+@i
+M = 1
+@sum
+M = 0
+
+(LOOP)
+
+@i
+D = M
+@R0
+D = D - M
+@STOP
+D;JGT
+
+@sum
+D = M
+@i
+D = D + M
+@sum
+M = D
+
+@i
+M = M + 1
+
+@LOOP
+0;JMP
+
+(STOP)
+@sum
+D = M
+@R1
+M = D
+
+(END)
+@END
+0;JMP
+
+I'm starting chapter 4 of the book the elements of computing: building by noam nisan, in which case, can you clarify me as i try to interpret this code from the book?
+"
+//sets the ram value of i to 1
+@i 
+M = 1
+//sets the ram value of sum to zero
+@sum
+M = 0
+
+//this is where the D;JMP goes to
+(LOOP)
+//this sets D to ram value of i
+@i
+D = M
+//This sets D to i - ram value of r0
+@R0
+D = D - M
+//this is where the conditional jump goes to, equivalent of 'if i > r0: break;'
+@STOP
+D;JGT
+//sets the sum value to its ram position
+@sum
+D = M
+//takes the value of i and adds it to the sum value
+@i
+D = D + M
+//takes the previous sum and adds it back to sum value ram
+@sum
+M = D
+//increments i
+@i
+M = M + 1
+//automatically jumps back to the loop, this loop terminates when i is incremented to bigger than r0, in which case it stops and we have obtained sigma i = 1 to r0 of i
+@LOOP
+0;JMP
+//where @stop jumps to
+(STOP)
+//takes the value of sum
+@sum
+D = M
+//and puts it into the ram1
+@R1
+M = D
+//this is a loop as well, which i assume is to keep the program running
+(END)
+@END
+0;JMP"
+So, how is that, any inaccuracies?
+
+@sum
+M=0
+@R0
+D=D+M
+@sum
+M=D
+@R1
+D=D+M
+@sum
+M=D
+D=M
+@R1
+D=D+M
+@sum
+M=0
+@R1
+@R0
+D=M
+@R1
+D=D+M
+@17
+D=D+A
+@R2
+M=D
+(END)
+@END
+0;JMP
+
+@i
+M=1
+@sum
+M=0
+
+(LOOP)
+@i
+D=M
+@R0
+D=D-M
+@STOP
+D;JGT
+
+@i
+D=M
+@sum
+M=M+D
+
+@i
+M=M+1
+
+@LOOP
+0;JMP
+
+(STOP)
+@sum
+D=M
+@R1
+M=D
+
+(END)
+@END
+0;JMP
+
+for i in 0, 1, 2...n
+do sth to a
+
+@i
+M=0
+
+@R0
+D=M
+@n
+M=D
+
+
+
+(LOOP)
+@i
+D=M
+@n
+D=D-M
+@STOP
+D;JGT
+@i
+D=M
+
+//whatever the hell you do with arr[i]
+@x
+M=523
+@17
+D=A
+@523
+M=D
+
+
+
+
+@i
+M=M+1
+
+@LOOP
+0;JMP
+
+(STOP)
+
+(END)
+@END
+0;JMP
+
+@x
+M=0
+
+@n
+D=M
+@R1
+D=D-M
+@END
+D;JEQ
+//important part
+@R0
+D=M
+@n
+A=D+M
+M=-1
+
+
+@... the end loop (trivial)
+//for i in 1..r1, add r0 to r1
+
+@n
+M=1
+@sum
+M=0
+
+(LOOP)
+
+@n
+D=M
+@R1
+D=D-M
+@STOP
+D;JGT
+
+//sum += r0, n from 1 to r1
+@R0
+D=M
+@sum
+D=D+M
+
+
+@LOOP
+0;JMP
+
+(STOP)
+@R0
+D=M
+@R2
+M=D
+
+(END)
+@END
+0;JMP
+
+0000000000010000
+1110111111001000
+0000000000010001
+1110101010001000
+0000000000010000
+1111110000010000
+0000000000000001
+1111010011010000
+0000000000010000
+1110001100000001
+0000000000000000
+1111110000010000
+0000000000010001
+1111000010010000
+0000000000000100
+1110101010000111
+0000000000000000
+1111110000010000
+0000000000000010
+1110001100001000
+0000000000010100
+1110101010000111
+
+(BACK)
+@SCREEN
+D=A
+@pointer
+M=D
+
+(BACK2)
+@pointer
+A=M
+M=0
+
+@pointer
+M=M+1
+
+@KBD
+D=M
+@BACK2
+D;JEQ
+
+
+@SCREEN
+D=A
+@pointer
+M=D      // pointer = 16384
+
+(PAINT)
+    @pointer
+    A=M      // Go to the address currently stored in pointer
+    M=-1     // Paint it black
+
+    @pointer
+    M=M+1    // Move the pointer forward by 1
+    // Check: is pointer == 24576 (the end)?
+    //check for keyboard press = 0
+    @KBD
+    D=M
+    @BACK
+    D;JEQ
+
+    //pointer check
+    @KBD
+    D=A
+    @pointer
+    D=D-M
+
+    @PAINT
+    D;JGT
+I used ai for the fill program only, but i advice against it, this was only caused by me forgetting that i could just put the problem aside for later solution myself, however, understanding the ai solution is not bad, either
+
+In the end, it's just a matter of preference, albeit, i think ai should be more helpful
+
+The thing i learned was pretty much goto and addresses, i still feel like pointers are a bit vague. It's mostly that you do this:
+@variable
+A=change
+M=change of the address
+
+then the variable itself doesn't change, it's just that because we changed A, the address of M changed from @variable to change
+well, it's kinda confusing at first, but to make the address do this repeatedly, you need to introduce increment loops
+either way, in fill, it is possible to implement choosing between black and white and writing the program to just fill with that color, which i surmise is pretty ingenious, i suggest you find it out yourself, or ask an ai to do it
+
+Here i am doing some exercises i told ai to give me, this here is max(a, b, c)
+
+@R0
+D=M
+@R1
+D=D-M
+//if r0 < r1, then go to compare with r2
+@NEXT
+D;JLT
+@NEXT2
+D;JGT
+@NEXT
+D;JEQ
+
+(NEXT2)
+@R0
+D=M
+@R2
+D=D-M
+@R2MAX
+D;JLT
+@R0MAX
+D;JGT
+@R0MAX
+D;JEQ
+
+(NEXT)
+@R1
+D=M
+@R2
+D=D-M
+@R2MAX
+D;JLT
+@R1MAX
+D;JGT
+@R1MAX
+D;JEQ //any is fine
+
+//case where r1 max
+(R1MAX)
+@R1
+D=M
+@R3
+M=D
+(END)
+@END
+D;JMP
+
+//case where r2 is maximum
+(R2MAX)
+@R2
+D=M
+@R3
+M=D
+(END)
+@END
+D;JMP
+
+(R0MAX)
+@R0
+D=M
+@R3
+M=D
+(END)
+@END
+D;JMP
+
+//actually, i should find a way to deal with this by pseudocode first
+//if r1 > r0, then compare r1 to r2
+//else, compare r0 to r2
+//then results the bigger by doing another if
+//
+
+implementation of the ai's pseudocode
+@R0
+D=M
+@temp
+M=D
+...
+2. The Vertical Line (Advanced Screen I/O)
+
+Goal: Draw a single vertical line exactly in the middle of the screen (from top to bottom).
+
+    The Challenge: In Fill.asm, you colored every pixel. Here, you have to skip memory addresses.
+
+    The Math: Each row of the screen is 32 words wide (512 pixels/16 bits per word=32). To draw a vertical line, you don't do pointer = pointer + 1. You have to do pointer = pointer + 32 to hit the same horizontal spot on the next line.
+
+    Key Concept: Stepping through memory using a constant increment.
+
+3. The "Array Sum" (Pointers & Dynamic Loops)
+
+Goal: Sum a list of numbers stored in memory.
+
+    The length of the list is stored in R0.
+
+    The starting address of the list is stored in R1.
+
+    Store the final sum in R2.
+
+    The Challenge: This is exactly how C or Java handles arrays. You aren't just using a pointer to a fixed location like SCREEN; you are using R1 to tell you where to start looking.
+
+    Example: If R0 = 3 and R1 = 100, your code should add the values at RAM[100], RAM[101], and RAM[102].
+
+    Key Concept: Double indirect addressing (loading an address from a register).
+I'm kinda spent here, so i'll fuck off for a moment before coming back
+
+In short, chapter 4 is pretty much a fancier language with a goto and variables, and pointers, and as you can see, i am not very good at it, perhaps because i mainly dealt with python and not c
+
+
+
+
